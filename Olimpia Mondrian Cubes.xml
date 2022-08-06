@@ -1,0 +1,96 @@
+<Schema name="Olimpia">
+  <Cube name="orderMetrics" visible="true" cache="true" enabled="true">
+    <Table name="ordermetrics">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="tamanhoId" highCardinality="false" name="tamanho">
+      <Hierarchy name="tamanho" visible="true" hasAll="true" primaryKey="tamanhoId">
+        <Table name="tamanho">
+        </Table>
+        <Level name="tamanho" visible="true" column="nomeTamanho" nameColumn="nomeTamanho" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" visible="true" foreignKey="date" highCardinality="false" name="time">
+      <Hierarchy name="Calendar" visible="true" hasAll="true">
+        <Table name="time">
+        </Table>
+        <Level name="year" visible="true" column="year" nameColumn="year" type="String" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="quarter" visible="true" table="time" column="quarter" nameColumn="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+        </Level>
+        <Level name="month" visible="true" column="month" nameColumn="month" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="week" visible="true" column="week" nameColumn="week" type="String" uniqueMembers="false" levelType="TimeWeeks" hideMemberIf="Never">
+        </Level>
+        <Level name="Date" visible="true" column="date" nameColumn="date" type="Date" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="nomeProdutoId" highCardinality="false" name="produto">
+      <Hierarchy name="nomeProduto" visible="true" hasAll="true" primaryKey="nomeProdutoId" primaryKeyTable="nomeproduto">
+        <Join leftKey="nomeProdutoId" rightKey="categoriaProdutoId">
+          <Table name="nomeproduto">
+          </Table>
+          <Table name="categoriaproduto">
+          </Table>
+        </Join>
+        <Level name="categoriaProduto" visible="true" table="categoriaproduto" column="nomeCategoria" nameColumn="nomeCategoria" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="nomeProduto" visible="true" table="nomeproduto" column="nomeProduto" nameColumn="nomeProduto" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="quantidadeVendida" column="quantidadeVendida" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="faturamento" column="faturamento" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="margemLiquida" column="margemLiquida" aggregator="avg" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="supplyMetrics" visible="true" cache="true" enabled="true">
+    <Table name="supplymetrics">
+    </Table>
+    <Dimension type="TimeDimension" visible="true" foreignKey="date" highCardinality="false" name="time">
+      <Hierarchy name="Time" visible="true" hasAll="true">
+        <Table name="time">
+        </Table>
+        <Level name="year" visible="true" column="year" nameColumn="year" type="String" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="quarter" visible="true" column="quarter" nameColumn="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+        </Level>
+        <Level name="month" visible="true" column="month" nameColumn="month" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="date" visible="true" column="date" nameColumn="date" type="Date" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="categoriaProdutoId" highCardinality="false" name="category">
+      <Hierarchy name="category" visible="true" hasAll="true">
+        <Table name="categoriaproduto">
+        </Table>
+        <Level name="New Level 0" visible="true" column="nomeCategoria" nameColumn="nomeCategoria" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="insumoId" highCardinality="false" name="insumo">
+      <Hierarchy name="insumo" visible="true" hasAll="true">
+        <Table name="insumo">
+        </Table>
+        <Level name="insumo" visible="true" column="nomeInsumo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="tamanhoId" highCardinality="false" name="tamanho">
+      <Hierarchy name="tamanho" visible="true" hasAll="true">
+        <Table name="tamanho">
+        </Table>
+        <Level name="tamanho" visible="true" column="nomeTamanho" nameColumn="nomeTamanho" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="consumoInventario" column="consumoInventario" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="custoInventario" column="custoInventario" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
